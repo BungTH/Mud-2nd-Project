@@ -8,6 +8,7 @@ int main()
 {
     int choice;             /*recieve choice data*/
     char inp[64];           /*recieve data from users*/
+    char out[128];  /*temp val*/
 
     printf("        Welcome to CPE student Database Manager        \n\n\n");
     printf("*******************************************************\n\n");
@@ -26,7 +27,8 @@ int main()
         switch (choice)
         {
             case 1:
-            printf("1\n\n");
+            dateControl(out);
+            printf("---%s---\n",out);
             break;
             case 2:
             printf("2\n\n");
