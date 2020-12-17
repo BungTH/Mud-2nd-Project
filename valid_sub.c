@@ -133,7 +133,57 @@ int validateProvince(char provinceValue[128])
 int validateGPA(char gpaValue[128])
 {
     int result = 0;         /*result of validation*/
-    int length;             /*recieve length of input from dateValue*/
+    int i = 0;              /*loop counter*/
+    int digit_check = 0;    /*result of digit check*/
+    int length;             /*recieve length of input from gpaValue*/
+    int dot_count = 0;      /*count number of dot*/
+    double gpa;             /*recieve gpa value from gpaValue*/
+
+    length = strlen(gpaValue);
+    for (i = 0;i < length;i++)
+    {
+        if (gpaValue[i] == '.')
+        {
+            dot_count++;
+            continue;
+        }
+        else if (isdigit(gpaValue[i]))
+        {
+            digit_check = 1;
+        }
+        else
+        {
+            digit_check = 0;
+            break;
+        }
+    }
+    if (digit_check == 1)
+    {
+        if (dot_count <= 1)
+        {
+            sscanf(gpaValue,"%lf",&gpa);
+            if ((gpa <= 4) && (gpa >= 0))
+            {
+                printf("\t\tValid Data\n");
+                result = 1;
+            }
+            else
+            {
+                printf("\t\tNot valid - GPA is out of range\n");
+                result = 0;
+            }
+        }
+        else 
+        {
+            printf("\t\tNot valid - there must be 0 or 1 dot in GPA\n");
+            result = 0;
+        }
+    }
+    else 
+    {
+        printf("\t\tNot valid - alphabetic character is prohibited\n");
+        result = 0;
+    }
 
     return result;
 }
@@ -141,7 +191,7 @@ int validateGPA(char gpaValue[128])
 int validateGender(char genderValue[128])
 {
     int result = 0;         /*result of validation*/
-    int length;             /*recieve length of input from dateValue*/
+    int length;             /*recieve length of input from genderValue*/
 
     return result;
 }

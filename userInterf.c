@@ -35,7 +35,7 @@ int main()
             case 3:
             printf("3\n\n");
             case 9:
-            provinceControl(out);
+            gpaControl(out);
             break;
             default:
             printf("\t\tNot valid - illegal choice\n\n");
