@@ -170,7 +170,7 @@ int validateName(char nameValue[128])
     if (space_count == 2)
     {
         sscanf(nameValue,"%s %s %s",title,first_name,last_name);
-        for (i = 0;i < 4;i++)
+        for (i = 0; i < 4;i++)
         {
             if (strcasecmp(title,title_format[i]) == 0)
             {
@@ -190,26 +190,31 @@ int validateName(char nameValue[128])
             {
                 if ((last_length <= 30) && (last_length >= 2))
                 {
-
+                    printf("\t\tValid Data\n");
+                    result = 1;
                 }
                 else 
                 {
                     printf("\t\tNot valid - last name must be at least 2 length long and no more than 30 length long\n");
+                    result = 0;
                 }
             }
             else
             {
                 printf("\t\tNot valid - first name must be at least 2 length long and no more than 30 length long\n");
+                result = 0;
             }
         }
         else 
         {
             printf("\t\tNot valid - No title or Other title is prohibited\n");
+            result = 0;
         }
     }
     else
     {
         printf("\t\tNot valid - there must be 2 spacebar\n");
+        result = 0;
     }
 
     return result;
@@ -218,8 +223,86 @@ int validateName(char nameValue[128])
 int validateStID(char idValue[128])
 {
     int result = 0;         /*result of validation*/
+    int digit_check = 1;    /*result of digit check*/    
+    int length;             /*recieve length of input from idValue*/
+    long int stID_value;    /*recieve student ID from idValue*/   
+    int yy;                 /*recieve yy value from idValue*/
+    int middle;             /*recieve middle code form idValue*/        
+    int pp;                 /*recieve pp value from idValue*/
+    int dd;                 /*recieve dd value from idValue*/
 
-
+    length = strlen(idValue);
+    if (length == 11)
+    {
+        for (i = 0;i < length;i++)
+        {
+            if (isdigit(idValue[i]))
+            {
+                digit_check = 1;
+            }
+            else 
+            {
+                digit_check = 0;
+                break;
+            }
+        }
+        if (digit_check == 1)
+        {
+            sscanf(idValue,"%ld",&stID_value);
+            yy = stID_value / 1000000000;
+            middle = (stID_value / 10000) % 100000;
+            pp = (stID_value / 100) % 100;
+            dd = stID_value % 100;
+            if (middle == 7050)
+            {
+                if ((yy <= 63) && (yy >= 55))
+                {
+                    if ((pp == 34) || (pp == 10))
+                    {
+                        if (dd == 0)
+                        {
+                            printf("\t\tNot valid - last two digits can't be 0s\n");
+                            result = 0;
+                        }
+                        else
+                        {
+                            result = 1;
+                        }
+                    }
+                    else 
+                    {
+                        printf("\t\tNot valid - invalid student code\n");
+                        result = 0;
+                    }
+                }
+                else
+                {
+                    printf("\t\tNot valid - invalid year\n");
+                    result = 0;
+                }
+            }
+            else 
+            {
+                printf("\t\tNot valid - wrong middle digits\n");
+                result = 0;
+            }
+        }
+        else 
+        {
+            printf("\t\tNot valid - alphabetic character is prohibited\n");
+            result = 0;
+        }
+    }
+    else if (length > 11)
+    {
+        printf("\t\tNot valid - length is too long\n");
+        result = 0;
+    }
+    else if (length < 11)
+    {
+        printf("\t\tNot valid - length is too short\n");
+        result = 0;
+    }
 
     return result;
 }
