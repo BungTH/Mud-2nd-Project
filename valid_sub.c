@@ -101,24 +101,29 @@ int validateProvince(char provinceValue[128])
                 if (result == 1)
                 {
                     printf("\t\tValid Data\n");
-                    result == 1;
+                    result = 1;
                 }
                 else
                 {
                     printf("\t\tNot valid - wrong format of province code (nn part)\n");
-                    result == 0;
+                    result = 0;
                 }
             }
-            else 
+            else if ((provinceValue[3] == 'I') && (provinceValue[4] == 'N'))
+            {
+                printf("\t\tValid Data\n");
+                result = 1;
+            }
+            else
             {
                 printf("\t\tNot valid - alphabetic character is prohibited\n");
-                result == 0;
+                result = 0;
             }
         }
         else
         {
             printf("\t\tNot valid - wrong format of province code (TH- part)\n");
-            result == 0;
+            result = 0;
         }
     }
     else 

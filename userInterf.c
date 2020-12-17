@@ -8,7 +8,6 @@ int main()
 {
     int choice;             /*recieve choice data*/
     char inp[64];           /*recieve data from users*/
-    char out[128];  /*temp val*/
 
     printf("        Welcome to CPE student Database Manager        \n\n\n");
     printf("*******************************************************\n\n");
@@ -27,18 +26,20 @@ int main()
         switch (choice)
         {
             case 1:
-            printf("\n\t---Displaying records---\n");
-            break;
+                printf("\n\t---Displaying records---\n");
+                display();
+                printf("All data shown\n\n");
+                break;
             case 2:
-            printf("2\n\n");
-            break;
+                printf("\n\t---Adding Data---\n");
+                add();
+                break;
             case 3:
-            printf("3\n\n");
-            case 9:
-            genderControl(out);
-            break;
+                printf("\n\t---Modifying Data---\n");
+                search();
+                break;
             default:
-            printf("\t\tNot valid - illegal choice\n\n");
+                printf("\t\tNot valid - illegal choice\n\n");
         }
         printf("*******************************************************\n\n");
         printf("\tHere are available choices : \n");

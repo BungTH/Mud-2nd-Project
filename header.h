@@ -1,3 +1,15 @@
+typedef struct
+{
+    char stID[32];          /*student ID*/
+    char name[128];         /*name of student*/
+    char date[32];          /*date of birth*/
+    char home[16];          /*province code*/
+    char gpa[16];           /*GPA of student*/
+    char gender[2];         /*gender of student*/
+} DATA_T;
+
+DATA_T textdata;
+
 /*
     control function for date validation
 
@@ -45,3 +57,27 @@ int gpaControl(char valGPA[128]);
     return result of validation and value back to called function by pharsing
 */
 int genderControl(char valGender[128]);
+
+/*
+    function for display data
+
+    will take nothing as it's argument
+    return nothing
+*/
+void display();
+
+/*
+    function for adding data
+
+    will take nothing as it's argument
+    return nothing
+*/
+void add();
+
+/*
+    function for search data
+
+    will take nothing as it's argument
+    return nothing
+*/
+void search();

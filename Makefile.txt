@@ -9,8 +9,14 @@ EXECUTABLES=database
 
 all : $(EXECUTABLES)
 
-Fmanager.o : Fmanager.c header.h
-	gcc -c Fmanager.c
+Fmanager_modify_search.o : Fmanager_modify_search.c header.h
+	gcc -c Fmanager_modify_search.c header.h
+
+Fmanager_add.o : Fmanager_add.c header.h
+	gcc -c Fmanager_add.c header.h
+
+Fmanager_display.o : Fmanager_display.c header.h
+	gcc -c Fmanager_display.c header.h
 
 valid_main.o : valid_main.c header.h
 	gcc -c valid_main.c
@@ -21,8 +27,8 @@ valid_sub.o : valid_sub.c header.h
 userInterf.o : userInterf.c header.h
 	gcc -c userInterf.c
 
-database : userInterf.o valid_main.o valid_sub.o Fmanager.o
-	gcc -o database userInterf.o valid_main.o valid_sub.o Fmanager.o
+database : userInterf.o valid_main.o valid_sub.o Fmanager_display.o Fmanager_add.o Fmanager_modify_search.o
+	gcc -o database userInterf.o valid_main.o valid_sub.o Fmanager_display.o Fmanager_add.o Fmanager_modify_search.o
 
 
 clean :

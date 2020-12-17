@@ -221,15 +221,18 @@ int validateName(char nameValue[128])
 
 int validateStID(char idValue[128])
 {
+    FILE *pSample = NULL;   /*position of database file*/
     int result = 0;         /*result of validation*/
     int i = 0;              /*loop counter*/
     int digit_check = 1;    /*result of digit check*/    
+    int unique_check = 1;   /*result of unique check*/
     int length;             /*recieve length of input from idValue*/
     long int stID_value;    /*recieve student ID from idValue*/   
     int yy;                 /*recieve yy value from idValue*/
     int middle;             /*recieve middle code form idValue*/        
     int pp;                 /*recieve pp value from idValue*/
     int dd;                 /*recieve dd value from idValue*/
+    char inp[256];          /*recieve data from file*/
 
     length = strlen(idValue);
     if (length == 11)
@@ -266,8 +269,30 @@ int validateStID(char idValue[128])
                         }
                         else
                         {
-                            printf("\t\tValid Data\n");
-                            result = 1;
+                            pSample = fopen("Sample.txt","r");
+                            while (fgets(inp,sizeof(inp),pSample) != 0)
+                            {
+                                sscanf(inp,"%32[^*]*%128[^*]*%32[^*]*%16[^*]*%16[^*]*%2[^*]",textdata.stID,textdata.name,textdata.date,textdata.home,textdata.gpa,textdata.gender);
+                                if(strcmp(textdata.stID,idValue) == 0)
+                                {
+                                    unique_check = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                    unique_check = 0;
+                                }
+                            }
+                            if (unique_check == 1)
+                            {
+                                printf("\t\tNot valid - Student ID must be unique\n");
+                                result = 0;
+                            }
+                            else if (unique_check == 0)
+                            {
+                                printf("\t\tValid Data\n");
+                                result = 1;
+                            }
                         }
                     }
                     else 
