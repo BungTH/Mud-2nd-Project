@@ -193,6 +193,26 @@ int validateGender(char genderValue[128])
     int result = 0;         /*result of validation*/
     int length;             /*recieve length of input from genderValue*/
 
+    length = strlen(genderValue);
+    if (length == 1)
+    {
+        if ((genderValue[0] == 'M') || (genderValue[0] == 'F') || (genderValue[0] == 'O'))
+        {
+            printf("\t\tValid Data\n");
+            result = 1;
+        }
+        else 
+        {
+            printf("\t\tNot valid - other character beside M, F, O is not allowed\n");
+            result = 0;
+        }
+    }
+    else
+    {
+        printf("\t\tNot valid - format must be 1 character long\n");
+        result = 0;
+    }
+
     return result;
 }
 
