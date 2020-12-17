@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "header.h"
 
+int i = 0;                  /*loop counter*/
+
 /*
     function for date validation
 
@@ -52,13 +54,98 @@ int nameControl(char valName[128]);
 */
 int stIDControl(char valID[128]);
 
+/*
+    function for check is there alphabetic character in string
 
+    will take string to check if there're alphabetic character
+    return result of checking
+*/
+int checkAlpha(char checkAl[128]);
+
+/*
+    function for check is there number in string
+
+    will take string to check if there're number
+    return result of checking
+*/
+int checkNumber(char checkNum[128]);
+
+
+
+int checkAlpha(char checkAl[128])
+{
+    int result = 0;         /*result of checking*/
+    int length;             /*recieve length of input from checkAl*/
+
+    for (i = 0;i < length;i++)
+    {
+        if(isalpha)
+        {
+            result = 1;
+            break;
+        }
+        else
+        {
+            result = 0;
+        }
+    }
+
+    return result;
+}
+
+int checkNumber(char checkNum[128])
+{
+    int result = 0;         /*result of checking*/
+    int length;             /*recieve length of input from checkNum*/
+
+    for (i = 0;i < length;i++)
+    {
+        if(isdigit)
+        {
+            result = 1;
+            break;
+        }
+        else
+        {
+            result = 0;
+        }
+    }
+
+    return result;
+}
 
 int validateDate(char dateValue[128])
 {
     int result = 0;         /*result of validation*/
+    int length;             /*recieve length of input from dateValue*/
+    char day[16];           /*recieve string of day from dateValue*/
+    char month[16];         /*recieve string of month from dateValue*/
+    char year[16];          /*recieve string of year from dateValue*/
+    int day_value;          /*recieve value of day from dateValue*/
+    int month_value;        /*recieve value of month from dateValue*/
+    int year_value;         /*recieve value of year from dateValue*/
 
-    printf("test\n");
+    length = strlen(dateValue);
+    if (length == 10)
+    {
+        if ((dateValue[2] == '/') && (dateValue[5] == '/'))
+        {
+            sscanf("%[^/]/%[^/]/%[^\n]",day,month,year);
+            printf("day : %s\nmonth : %s\nyear : %s",day,month,year);
+        }
+        else
+        {
+            printf("\t\tNot valid - wrong format of input (must have /)\n");
+        }
+    }
+    else if (length > 10)
+    {
+        printf("\t\tNot valid - length is too long\n");
+    }
+    else if (length < 10)
+    {
+        printf("\t\tNot valid - length is too short\n");
+    }
     return result;
 }
 

@@ -27,8 +27,7 @@ int main()
         switch (choice)
         {
             case 1:
-            dateControl(out);
-            printf("---%s---\n",out);
+            printf("\n\t---Displaying records---\n");
             break;
             case 2:
             printf("2\n\n");
