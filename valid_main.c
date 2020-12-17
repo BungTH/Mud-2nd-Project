@@ -54,103 +54,18 @@ int nameControl(char valName[128]);
 */
 int stIDControl(char valID[128]);
 
-/*
-    function for check is there alphabetic character in string
 
-    will take string to check if there're alphabetic character
-    return result of checking
-*/
-int checkAlpha(char checkAl[128]);
-
-/*
-    function for check is there number in string
-
-    will take string to check if there're number
-    return result of checking
-*/
-int checkNumber(char checkNum[128]);
-
-
-
-int checkAlpha(char checkAl[128])
-{
-    int check = 0;          /*result of checking*/
-    int length;             /*recieve length of input from checkAl*/
-
-    length = strlen(checkAl);
-    for (i = 0;i < length;i++)
-    {
-        if (isalpha(checkAl))
-        {
-            check = 1;
-            break;
-        }
-        else if (checkAl[i] == '/')
-        {
-            if ((i = 2) || (i == 5))
-            {
-                continue;
-            }
-            else
-            {
-                check = -1;
-                break;
-            }
-        }
-        
-        else
-        {
-            check = 0;
-        }
-    }
-
-    return check;
-}
-
-int checkNumber(char checkNum[128])
-{
-    int check = 0;          /*result of checking*/
-    int length;             /*recieve length of input from checkNum*/
-
-    length = strlen(checkNum);
-    for (i = 0;i < length;i++)
-    {
-        if (isdigit(checkNum))
-        {
-            check = 1;
-            break;
-        }
-        else if (checkNum[i] == '/')
-        {
-            if ((i = 2) || (i == 5))
-            {
-                continue;
-            }
-            else
-            {
-                check = -1;
-                break;
-            }
-        }
-        else
-        {
-            check = 0;
-        }
-    }
-
-    return check;
-}
 
 int validateDate(char dateValue[128])
 {
     int result = 0;         /*result of validation*/
-    int alpha_check = 0;    /*result of checkAlpha*/
     int length;             /*recieve length of input from dateValue*/
     int day;                /*recieve value of day from dateValue*/
     int month;              /*recieve value of month from dateValue*/
     int year;               /*recieve value of year from dateValue*/
 
     length = strlen(dateValue);
+
     if (length == 10)
     {
         if ((dateValue[2] == '/') && (dateValue[5] == '/'))
@@ -158,6 +73,7 @@ int validateDate(char dateValue[128])
             if (isdigit(dateValue[0]) && isdigit(dateValue[1]) && isdigit(dateValue[3]) && isdigit(dateValue[4]) && isdigit(dateValue[6]) && isdigit(dateValue[7]) && isdigit(dateValue[8]) && isdigit(dateValue[9]))
             {
                 sscanf(dateValue,"%d/%d/%d",&day,&month,&year);
+
                 if ((year <= 2563) && (year >= 2463))
                 {
                     if ((month <= 12) && (month >= 1))
@@ -224,13 +140,77 @@ int validateDate(char dateValue[128])
     {
         printf("\t\tNot valid - length is too short\n");
     }
+
     return result;
 }
 
 int validateName(char nameValue[128])
 {
     int result = 0;         /*result of validation*/
+    int title_check = 0;    /*result of title check*/
+    int length;             /*recieve length of input from dateValue*/
+    int first_length;       /*recieve length of input from first name*/
+    int last_length;        /*recieve length of input from last name*/
+    int space_count = 0;    /*count number of spacebar*/
+    char title[16];         /*recieve title from nameValue*/
+    char first_name[64];    /*recieve first name from nameValue*/
+    char last_name[64];     /*recieve last name from nameValue*/
+    const char *title_format[4] = {"Mr.","Ms.","Miss","Mrs."};
+                            /*format for name title*/
 
+    length = strlen(nameValue);
+
+    for (i = 0;i < length;i++)
+    {
+        if (nameValue[i] == ' ')
+        {
+            space_count++;
+        }
+    }
+    if (space_count == 2)
+    {
+        sscanf(nameValue,"%s %s %s",title,first_name,last_name);
+        for (i = 0;i < 4;i++)
+        {
+            if (strcasecmp(title,title_format[i]) == 0)
+            {
+                title_check = 1;
+                break;
+            }
+            else 
+            {
+                title_check = 0;
+            }
+        }
+        if (title_check == 1)
+        {
+            first_length = strlen(first_name);
+            last_length = strlen(last_name);
+            if ((first_length <= 30) && (first_length >= 2))
+            {
+                if ((last_length <= 30) && (last_length >= 2))
+                {
+
+                }
+                else 
+                {
+                    printf("\t\tNot valid - last name must be at least 2 length long and no more than 30 length long\n");
+                }
+            }
+            else
+            {
+                printf("\t\tNot valid - first name must be at least 2 length long and no more than 30 length long\n");
+            }
+        }
+        else 
+        {
+            printf("\t\tNot valid - No title or Other title is prohibited\n");
+        }
+    }
+    else
+    {
+        printf("\t\tNot valid - there must be 2 spacebar\n");
+    }
 
     return result;
 }
@@ -275,14 +255,58 @@ int dateControl(char valDate[128])
 
 int nameControl(char valName[128])
 {
-    int name_result;        /*result of validation*/
+    int name_result = 0;    /*result of validation*/
+    char inp_name[128];     /*recieve name from valName*/
+    char name_cpy[128];     /*copy name from valName to validate*/
 
+    do
+    {
+        printf("Enter Name to validate (Press * to exit) : ");
+        fgets(inp_name,sizeof(inp_name),stdin);
+        sscanf(inp_name,"%[^\n]s",name_cpy);
+        if (strcmp(name_cpy,"*") == 0)
+        {
+            name_result = -1;
+            printf("\t\tExited Validation\n");
+        }
+        else
+        {
+            name_result = validateName(name_cpy);
+            if(name_result == 1)
+            {
+                strcpy(valName,name_cpy);
+            }
+        }
+    } while (name_result == 0);
+    
     return name_result;
 }
 
 int stIDControl(char valID[128])
 {
-    int stID_result;        /*result of validation*/
+    int stID_result = 0;    /*result of validation*/
+    char inp_stID[128];     /*recieve student ID from valDate*/
+    char stID_cpy[128];     /*copy student ID from valID to validate*/
 
+    do
+    {
+        printf("Enter Student ID to validate (Press * to exit) : ");
+        fgets(inp_stID,sizeof(inp_stID),stdin);
+        sscanf(inp_stID,"%[^\n]s",stID_cpy);
+        if (strcmp(stID_cpy,"*") == 0)
+        {
+            stID_result = -1;
+            printf("\t\tExited Validation\n");
+        }
+        else
+        {
+            stID_result = validateStID(stID_cpy);
+            if(stID_result == 1)
+            {
+                strcpy(valID,stID_cpy);
+            }
+        }
+    } while (stID_result == 0);
+    
     return stID_result;
 }
