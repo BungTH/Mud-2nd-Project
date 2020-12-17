@@ -74,64 +74,142 @@ int checkNumber(char checkNum[128]);
 
 int checkAlpha(char checkAl[128])
 {
-    int result = 0;         /*result of checking*/
+    int check = 0;          /*result of checking*/
     int length;             /*recieve length of input from checkAl*/
 
+    length = strlen(checkAl);
     for (i = 0;i < length;i++)
     {
-        if(isalpha)
+        if (isalpha(checkAl))
         {
-            result = 1;
+            check = 1;
             break;
         }
+        else if (checkAl[i] == '/')
+        {
+            if ((i = 2) || (i == 5))
+            {
+                continue;
+            }
+            else
+            {
+                check = -1;
+                break;
+            }
+        }
+        
         else
         {
-            result = 0;
+            check = 0;
         }
     }
 
-    return result;
+    return check;
 }
 
 int checkNumber(char checkNum[128])
 {
-    int result = 0;         /*result of checking*/
+    int check = 0;          /*result of checking*/
     int length;             /*recieve length of input from checkNum*/
 
+    length = strlen(checkNum);
     for (i = 0;i < length;i++)
     {
-        if(isdigit)
+        if (isdigit(checkNum))
         {
-            result = 1;
+            check = 1;
             break;
+        }
+        else if (checkNum[i] == '/')
+        {
+            if ((i = 2) || (i == 5))
+            {
+                continue;
+            }
+            else
+            {
+                check = -1;
+                break;
+            }
         }
         else
         {
-            result = 0;
+            check = 0;
         }
     }
 
-    return result;
+    return check;
 }
 
 int validateDate(char dateValue[128])
 {
     int result = 0;         /*result of validation*/
+    int alpha_check = 0;    /*result of checkAlpha*/
     int length;             /*recieve length of input from dateValue*/
-    char day[16];           /*recieve string of day from dateValue*/
-    char month[16];         /*recieve string of month from dateValue*/
-    char year[16];          /*recieve string of year from dateValue*/
-    int day_value;          /*recieve value of day from dateValue*/
-    int month_value;        /*recieve value of month from dateValue*/
-    int year_value;         /*recieve value of year from dateValue*/
+    int day;                /*recieve value of day from dateValue*/
+    int month;              /*recieve value of month from dateValue*/
+    int year;               /*recieve value of year from dateValue*/
 
     length = strlen(dateValue);
     if (length == 10)
     {
         if ((dateValue[2] == '/') && (dateValue[5] == '/'))
         {
-            sscanf("%[^/]/%[^/]/%[^\n]",day,month,year);
-            printf("day : %s\nmonth : %s\nyear : %s",day,month,year);
+            if (isdigit(dateValue[0]) && isdigit(dateValue[1]) && isdigit(dateValue[3]) && isdigit(dateValue[4]) && isdigit(dateValue[6]) && isdigit(dateValue[7]) && isdigit(dateValue[8]) && isdigit(dateValue[9]))
+            {
+                sscanf(dateValue,"%d/%d/%d",&day,&month,&year);
+                if ((year <= 2563) && (year >= 2463))
+                {
+                    if ((month <= 12) && (month >= 1))
+                    {
+                        if ((day>=1 && day<=31) && (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12))
+                        {
+                            printf("\t\tValid Data\n");
+                            result = 1;
+                        }
+                        else if ((day>=1 && day<=30) && (month==4 || month==6 || month==9 || month==11))
+                        {
+                            printf("\t\tValid Data\n");
+                            result = 1;
+                        }
+                        else if ((day>=1 && day<=28) && (month==2))
+                        {
+                            printf("\t\tValid Data\n");
+                            result = 1;
+                        }
+                        else if (day==29 && month==2 && (year%400==0 ||(year%4==0 && year%100!=0)))
+                        {
+                            printf("\t\tValid Data\n");
+                            result = 1;
+                        }
+                        else
+                        {
+                            printf("\t\tNot valid - day is illegal\n");
+                            result = 0;
+                        }
+                    }
+                    else 
+                    {
+                        printf("\t\tNot valid - month is illegal\n");
+                        result = 0;
+                    }
+                }
+                else if (year > 2563)
+                {
+                    printf("\t\tNot vlaid - year can't be in future\n");
+                    result = 0;
+                }
+                else 
+                {
+                    printf("\t\tNot valid - year is outside allowed range\n");
+                    result = 0;
+                }
+            }
+            else
+            {
+                printf("\t\tNot valid - alphabetic character is prohibited\n");
+                result = 0;
+            }
         }
         else
         {
