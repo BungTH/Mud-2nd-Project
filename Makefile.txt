@@ -1,0 +1,27 @@
+# This makefile is intended to build database of CPE Computer for
+# CPE100 Project 2
+#
+# Created 17/12/2020 By 
+# ID 6307050
+# 
+
+EXECUTABLES=database
+
+all : $(EXECUTABLES)
+
+Fmanager.o : Fmanager.c header.h
+	gcc -c Fmanager.c
+
+valid.o : valid.c header.h
+	gcc -c valid.c
+
+userInterf.o : userInterf.c header.h
+	gcc -c userInterf.c
+
+database : userInterf.o valid.o Fmanager.o
+	gcc -o database userInterf.o valid.o Fmanager.o
+
+
+clean :
+	-rm *.o
+	-rm database
