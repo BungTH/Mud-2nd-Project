@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include "header.h"
 
-int i = 0;                  /*loop counter*/
-
 /*
     function for date validation
 
@@ -147,6 +145,7 @@ int validateDate(char dateValue[128])
 int validateName(char nameValue[128])
 {
     int result = 0;         /*result of validation*/
+    int i = 0;              /*loop counter*/
     int title_check = 0;    /*result of title check*/
     int length;             /*recieve length of input from dateValue*/
     int first_length;       /*recieve length of input from first name*/
@@ -223,6 +222,7 @@ int validateName(char nameValue[128])
 int validateStID(char idValue[128])
 {
     int result = 0;         /*result of validation*/
+    int i = 0;              /*loop counter*/
     int digit_check = 1;    /*result of digit check*/    
     int length;             /*recieve length of input from idValue*/
     long int stID_value;    /*recieve student ID from idValue*/   
@@ -266,6 +266,7 @@ int validateStID(char idValue[128])
                         }
                         else
                         {
+                            printf("\t\tValid Data\n");
                             result = 1;
                         }
                     }
@@ -321,7 +322,6 @@ int dateControl(char valDate[128])
         if (strcmp(date_cpy,"*") == 0)
         {
             date_result = -1;
-            printf("\t\tExited Validation\n");
         }
         else
         {
@@ -350,7 +350,6 @@ int nameControl(char valName[128])
         if (strcmp(name_cpy,"*") == 0)
         {
             name_result = -1;
-            printf("\t\tExited Validation\n");
         }
         else
         {
@@ -368,7 +367,7 @@ int nameControl(char valName[128])
 int stIDControl(char valID[128])
 {
     int stID_result = 0;    /*result of validation*/
-    char inp_stID[128];     /*recieve student ID from valDate*/
+    char inp_stID[128];     /*recieve student ID from valID*/
     char stID_cpy[128];     /*copy student ID from valID to validate*/
 
     do
@@ -379,7 +378,6 @@ int stIDControl(char valID[128])
         if (strcmp(stID_cpy,"*") == 0)
         {
             stID_result = -1;
-            printf("\t\tExited Validation\n");
         }
         else
         {
