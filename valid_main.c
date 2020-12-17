@@ -56,7 +56,7 @@ int stIDControl(char valID[128]);
 
 int validateDate(char dateValue[128])
 {
-    int result;             /*result of validation*/
+    int result = 0;         /*result of validation*/
 
     printf("test\n");
     return result;
@@ -64,7 +64,7 @@ int validateDate(char dateValue[128])
 
 int validateName(char nameValue[128])
 {
-    int result;             /*result of validation*/
+    int result = 0;         /*result of validation*/
 
 
     return result;
@@ -72,7 +72,7 @@ int validateName(char nameValue[128])
 
 int validateStID(char idValue[128])
 {
-    int result;             /*result of validation*/
+    int result = 0;         /*result of validation*/
 
 
 

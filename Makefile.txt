@@ -12,14 +12,17 @@ all : $(EXECUTABLES)
 Fmanager.o : Fmanager.c header.h
 	gcc -c Fmanager.c
 
-valid.o : valid.c header.h
-	gcc -c valid.c
+valid_main.o : valid_main.c header.h
+	gcc -c valid_main.c
+
+valid_sub.o : valid_sub.c header.h
+	gcc -c valid_sub.c
 
 userInterf.o : userInterf.c header.h
 	gcc -c userInterf.c
 
-database : userInterf.o valid.o Fmanager.o
-	gcc -o database userInterf.o valid.o Fmanager.o
+database : userInterf.o valid_main.o valid_sub.o Fmanager.o
+	gcc -o database userInterf.o valid_main.o valid_sub.o Fmanager.o
 
 
 clean :
